@@ -1,0 +1,48 @@
+@begin:						load r1, @porukaZaUnos
+							echo r1
+							load r0, @nula
+							load r1, @jedan
+							iinput @spremljeniBroj
+							load r2, @spremljeniBroj 
+							testEquals r0, r2
+							jumpIfTrue @gotovo
+							testEquals r1, r2
+							jumpIfTrue @gotovo
+							
+							push r0
+							push r1
+							move r7, r2 ; r7 je kontrola koliko puta idemo
+							call @fib
+
+					
+@gotovo:					load r10, @porukaZaIspis
+							echo r10
+							echo r2
+							halt
+					
+
+@fib:						jump @checkIfOver
+@continue:					increment r15
+							pop r5
+							pop r6
+							add r6, r5, r6
+							move r2, r6
+							push r5
+							push r6
+							call @fib
+							
+							
+@checkIfOver:				testEquals r1, r7
+							jumpIfTrue @gotovo
+							increment r1
+							jump @continue
+
+@nula:						DEFINT 0
+@jedan:						DEFINT 1
+@spremljeniBroj:			DEFINT 0
+@porukaZaUnos:				DEFSTR "Unesite broj iz [0,6]: \n"	
+@porukaZaIspis:				DEFSTR "Traženi fibonaccijev broj je:\n"
+
+# Slijedi mjesto predviđeno za stog
+			RESERVE:50
+@stackTop:	RESERVE

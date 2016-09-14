@@ -1,0 +1,18 @@
+# program ispisuje zadani broj zadani broj puta
+		load r6, @zero		; nula za usporedbu
+		load r7, @counter	; broj ispisivanja
+		move r0, @number	; adresa lokacije koja sadrzi broj koji ispisujem @counter puta
+		load r8, @space		; razmak
+		
+@loop:	testEquals r7, r6
+		jumpIfTrue @end
+		echo [r0]
+		decrement r7
+		jump @loop
+		
+@end:		halt
+
+@zero:		DEFINT	0
+@counter:	DEFINT	5
+@number:	DEFINT 42 ; smisao života
+@space:		DEFSTR " "

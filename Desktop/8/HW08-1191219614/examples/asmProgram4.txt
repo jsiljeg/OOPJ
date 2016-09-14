@@ -1,0 +1,30 @@
+			jump @pocetak			; ovo je instrukcija na adresi 0
+@brojac:	DEFINT 0				; ovo je konstanta na adresi 1
+@nula:		DEFINT 0				; ovo je konstanta na adresi 2
+
+@pocetak:	load r0, @nula			; upiši 0 u r0; instrukcija je na adresi 3
+			move r1, 1				; upiši 1 u r1
+			add r1, r0, r1			; malo zbrajamo
+			add r1, r1, r1			; malo zbrajamo
+			add r1, r1, r1			; malo zbrajamo - rezultat je 4 u r1
+			move [r0+1], r1			; upiši 4 na adresu @brojac
+			move [r0+2], [r0+1]		; prepiši ono što je na adresi @brojac na sljedeću adresu
+			load r3, @nula
+			echo r3					; treba ispisati 4
+			load r3, @enter
+			echo r3
+
+# evo malo poziva potprograma; za ovo već stog mora funkcionirati jer se tako prenosi povratna adresa
+			call @write
+			call @write
+			call @write
+			halt
+
+@write:		load r0, @poruka
+			echo r0
+			ret
+
+@enter:		DEFSTR "\n"
+@poruka:	DEFSTR "Pozdravi!\n"
+			RESERVE:19				; rezerviramo 19 lokacija u memoriji
+@stackTop:	RESERVE					; rezerviramo još jednu, ukupno 20 lokacija; ova postaje vrh stoga

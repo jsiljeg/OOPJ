@@ -1,0 +1,18 @@
+			jump @pocetak			; ovo je instrukcija na adresi 0
+@brojac:	DEFINT 8				; ovo je konstanta na adresi 1
+@nula:		DEFINT 1				; ovo je konstanta na adresi 2
+
+@pocetak:	load r4, @nula			; upiši 0 u r0; instrukcija je na adresi 3
+			echo r4
+			echo [r4]
+			move [r4], 9
+			echo r4
+			echo [r4]
+			load r5, @brojac
+			echo r5
+			halt
+
+
+
+@enter:		DEFSTR "\n"
+@poruka:	DEFSTR "Pozdravi!\n"

@@ -1,0 +1,40 @@
+			load r0, @nula
+			load r5, @brojIteracija
+			load r6, @noviRed
+			
+@begin:		load r1, @porukaZaUnos
+			echo r1
+			load r10, @spremljeniBroj ;stanje prije unosa
+			iinput @spremljeniBroj
+			load r11, @spremljeniBroj ;stanje poslije unosa
+			jump @provjera
+			
+@nastavak:	load r3, @spremljeniBroj
+			load r2, @porukaZaIspis
+			echo r2
+			jump @ispis
+
+			
+@ispis:		testEquals r0, r5			; je li r5 pao na nulu?
+			jumpIfTrue @gotovo			; ako je, gotovi smo
+			decrement r5				; umanji r5 -> broj iteracija
+			increment r3				; prilagodi broj za ispis
+			echo r3						; ispiši ga
+			echo r6						; @noviRed
+			jump @ispis					; skoci natrag u ispis
+
+@provjera:	testEquals r10, r11			; ako je stanje nepromijenjeno...
+			jumpIfTrue @begin			; nismo dobro unijeli i treba ispočetka	
+			jump @nastavak				; inače nastavimo sa zadatkom jer imamo dobar unos
+			
+@gotovo:	halt						; zaustavi procesor
+
+#podaci koje koristimo u programu
+
+@nula:						DEFINT 0
+@brojIteracija:				DEFINT 5
+@noviRed:					DEFSTR "\n"
+@spremljeniBroj:			DEFINT 0
+@porukaZaUnos:				DEFSTR "Unesite početni broj: "	
+@porukaAkoKriviUnos:		DEFSTR "Unos nije moguće protumačiti kao cijeli broj."
+@porukaZaIspis:				DEFSTR "Sljedećih 5 brojeva je:\n"

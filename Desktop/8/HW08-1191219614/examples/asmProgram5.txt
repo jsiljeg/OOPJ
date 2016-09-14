@@ -1,0 +1,30 @@
+# glavni program: zove metodu sum(i) koja računa i vraća sumu i + (i-1) + (i-2) + ... + 2 + 1, ispisuje rezultat
+# Za sumu prvih 6 ili više je problem jer stog više nema slobodnog mjesta - punimo ga da raste od većih prema manjim adresama.
+			move r0, 3
+			push r0
+			call @sum
+			increment r15
+			echo r0
+			halt
+			
+# Metoda sum(i)
+# ------------------------------------------
+# 'i' prima kao jedini parametar preko stoga
+# vraća rezultat u registru r0; sve ostale registre čuva (ako neki mijenja, original gurne na stog pa kasnije restaurira prije izlaska)
+@sum:		move r0, 0
+			push r1
+			move r1, [r15+3]
+			testEquals r0, r1
+			jumpIfTrue @sumOver
+			move r0, -1
+			add r0, r1, r0
+			push r0
+			call @sum
+			increment r15
+			add r0, r1, r0
+@sumOver:	pop r1
+			ret
+
+# Slijedi mjesto predviđeno za stog
+			RESERVE:19
+@stackTop:	RESERVE
