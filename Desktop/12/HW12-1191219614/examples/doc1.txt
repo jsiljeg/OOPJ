@@ -1,0 +1,7 @@
+This is sample text.
+{$ FOR i -1 10.234 $}
+This is {$= i perica bukvić $}-th time this message is generated.
+{$END$}
+{$FOR i 0 10 $}
+sin({$pei $}^2) = {$= i i * @sin "\\" @decfmt $}
+{$END$}
